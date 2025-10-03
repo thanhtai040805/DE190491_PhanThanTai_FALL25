@@ -13,6 +13,14 @@ const stats = ages.reduce(
   { total: 0, min: Infinity, max: -Infinity, buckets: { teen: 0, adult: 0 } } // Giá trị khởi tạo
 );
 
+const result = {
+  total: stats.total,
+  min: stats.min,
+  max: stats.max,
+  buckets: stats.buckets,
+};
+console.log(result);
+
 // In kết quả tổng, min, max
 console.log(`Total: ${stats.total}, Min: ${stats.min}, Max: ${stats.max}`);
 // In kết quả đếm teen và adult

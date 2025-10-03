@@ -4,10 +4,7 @@ export const BookForm = () => {
       <div className="container">
         <h2 className="text-light mb-4 text-center fw-bold">Book Your Table</h2>
 
-        <form
-          className="row g-3"
-          onSubmit={(e) => e.preventDefault()}
-        >
+        <form className="row g-3" onSubmit={(e) => e.preventDefault()}>
           <div className="col-md-4">
             <input
               type="text"
@@ -25,7 +22,11 @@ export const BookForm = () => {
             />
           </div>
           <div className="col-md-4">
-            <select defaultValue="" required className="form-select bg-white text-dark border-secondary">
+            <select
+              defaultValue=""
+              required
+              className="form-select bg-white text-dark border-secondary"
+            >
               <option value="" disabled>
                 Select a Service
               </option>
@@ -42,7 +43,7 @@ export const BookForm = () => {
               className="form-control bg-white text-dark border-secondary"
             ></textarea>
           </div>
-          
+
           <div className="col-12 text-start">
             <button type="submit" className="btn btn-warning text-white px-4">
               Send Message

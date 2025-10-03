@@ -1,23 +1,114 @@
 export const HeroSection = () => {
   return (
-    <header
-      className="position-relative text-white d-flex align-items-center"
-      style={{
-        backgroundImage: "url('picture1.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        height: "400px",
-      }}
-    >
-      <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
-
-      <div className="position-relative container text-center">
-        <h1 className="fw-bold display-4 mb-3">Neapolitan Pizza</h1>
-        <p className="fs-5 text-white">
-          If you are looking for traditional Italian pizza, the Neapolitan is
-          the best option!
-        </p>
+    <div id="carouselExampleCaptions" className="carousel slide">
+      <div className="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="0"
+          className="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="3"
+          aria-label="Slide 4"
+        ></button>
       </div>
-    </header>
+      <div className="carousel-inner">
+        <div className="carousel-item active">
+          <img
+            src="picture1.jpg"
+            className="d-block w-100"
+            style={{ height: "400px", objectFit: "cover" }}
+            alt="..."
+          />
+          <div className="carousel-caption d-none d-md-block">
+            <h5>Neapolitan Pizza</h5>
+            <p>
+              If you are looking for traditional Italian pizza, the Neapolitan
+              is the best option!
+            </p>
+          </div>
+        </div>
+        <div className="carousel-item">
+          <img
+            src="picture2.jpg"
+            className="d-block w-100"
+            style={{ height: "400px", objectFit: "cover" }}
+            alt="..."
+          />
+          <div className="carousel-caption d-none d-md-block">
+            <h5>Margherita Pizza</h5>
+            <p>
+              If you are looking for a classic pizza, the Margherita is the best
+              option!
+            </p>
+          </div>
+        </div>
+        <div className="carousel-item">
+          <img
+            src="picture3.jpg"
+            className="d-block w-100"
+            style={{ height: "400px", objectFit: "cover" }}
+            alt="..."
+          />
+          <div className="carousel-caption d-none d-md-block">
+            <h5>Mushroom Pizza</h5>
+            <p>
+              If you are looking for a pizza with mushrooms, the Mushroom is the
+              best option!
+            </p>
+          </div>
+        </div>
+        <div className="carousel-item">
+          <img
+            src="picture4.jpg"
+            className="d-block w-100"
+            style={{ height: "400px", objectFit: "cover" }}
+            alt="..."
+          />
+          <div className="carousel-caption d-none d-md-block">
+            <h5>Hawaiian Pizza</h5>
+            <p>
+              If you are looking for a pizza with Hawaiian, the Hawaiian is the
+              best option!
+            </p>
+          </div>
+        </div>
+      </div>
+      <button
+        className="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev"
+      >
+        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Previous</span>
+      </button>
+      <button
+        className="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next"
+      >
+        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Next</span>
+      </button>
+    </div>
   );
 };

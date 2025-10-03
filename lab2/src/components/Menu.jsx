@@ -16,7 +16,9 @@ export const Menu = () => {
             />
 
             <div className="card-body d-flex flex-column">
-              <h3 className="card-title text-dark mb-2 fs-5">Margherita Pizza</h3>
+              <h3 className="card-title text-dark mb-2 fs-5">
+                Margherita Pizza
+              </h3>
               <div className="d-flex align-items-baseline gap-2 mb-3">
                 <span className="text-muted text-decoration-line-through small">
                   $40.00

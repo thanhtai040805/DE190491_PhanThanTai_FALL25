@@ -10,6 +10,9 @@ const companies = [
   { name: "Company Nine", category: "Retail", start: 1981, end: 1989 },
 ];
 
+const technology = companies.filter((c) => c.category === "Technology");
+technology.forEach((c) => console.log(`${c.name} - ${c.end}`));
+
 // Tạo bản sao không làm thay đổi mảng gốc và sắp xếp tăng dần
 const sortedCompanies = [...companies].sort((a, b) => a.end - b.end);
 // Cắt lấy 3 phần tử đầu
