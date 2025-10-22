@@ -35,8 +35,8 @@ const initialState = {
   selectedOption: "",
   score: 0,
   showScore: false,
-  feedback: "", // ✅ thêm phản hồi
-  timer: 10, // ✅ đồng hồ đếm ngược
+  feedback: "", // 
+  timer: 10, //
 };
 
 // ------------------------

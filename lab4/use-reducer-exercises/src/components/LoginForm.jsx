@@ -9,6 +9,7 @@ import {
   Col,
   Modal,
 } from "react-bootstrap";
+import { ModalComponent } from "./ModalComponent";
 
 const initialState = {
   username: "",
@@ -140,7 +141,13 @@ function LoginForm({ onSubmit }) {
           </Card>
         </Col>
       </Row>
-      <Modal show={showModal} onHide={handleCloseModal} centered>
+      <ModalComponent
+        show={showModal}
+        onHide={handleCloseModal}
+        title="Login Successful"
+        form={{ username, email: "", password }}
+      />
+      {/* <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Login Successful</Modal.Title>
         </Modal.Header>
@@ -152,7 +159,7 @@ function LoginForm({ onSubmit }) {
             Close
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </Container>
   );
 }

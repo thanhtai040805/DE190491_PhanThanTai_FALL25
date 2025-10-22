@@ -9,6 +9,7 @@ import {
   Modal,
   Toast,
 } from "react-bootstrap";
+import { ModalComponent } from "./ModalComponent";
 
 // =====================
 // 🔹 Regex Helpers
@@ -262,7 +263,13 @@ export default function SignUpForm() {
       </Toast>
 
       {/* Modal */}
-      <Modal show={showModal} onHide={handleCancel} centered>
+      <ModalComponent
+        show={showModal}
+        onHide={handleCancel}
+        title="Sign Up Info"
+        form={form}
+      />
+      {/* <Modal show={showModal} onHide={handleCancel} centered>
         <Modal.Header closeButton>
           <Modal.Title>Sign Up Info</Modal.Title>
         </Modal.Header>
@@ -286,7 +293,7 @@ export default function SignUpForm() {
             Close
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </Container>
   );
 }
