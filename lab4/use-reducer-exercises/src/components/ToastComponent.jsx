@@ -4,7 +4,20 @@ import { Toast, ToastContainer } from "react-bootstrap";
 export function ToastComponent({ show, onClose, message }) {
   return (
     <ToastContainer position="top-end" className="p-3">
-      <Toast show={show} onClose={onClose} delay={3000} autohide bg="success">
+      <Toast
+        show={show}
+        onClose={onClose}
+        delay={2000}
+        autohide
+        bg="success"
+        style={{
+          position: "fixed",
+          top: 20,
+          right: 20,
+          minWidth: 220,
+          zIndex: 9999,
+        }}
+      >
         <Toast.Header>
           <strong className="me-auto">Notification</strong>
         </Toast.Header>

@@ -10,6 +10,7 @@ import {
   Toast,
 } from "react-bootstrap";
 import { ModalComponent } from "./ModalComponent";
+import { ToastComponent } from "./ToastComponent";
 
 // =====================
 // 🔹 Regex Helpers
@@ -243,7 +244,12 @@ export default function SignUpForm() {
       </Row>
 
       {/* Toast */}
-      <Toast
+      <ToastComponent
+        show={showToast}
+        onClose={() => dispatch({ type: "HIDE_TOAST" })}
+        message="Submitted successfully!"
+      />
+      {/* <Toast
         show={showToast}
         onClose={() => dispatch({ type: "HIDE_TOAST" })}
         delay={2000}
@@ -260,7 +266,7 @@ export default function SignUpForm() {
           <strong className="me-auto text-success">Success</strong>
         </Toast.Header>
         <Toast.Body>Submitted successfully!</Toast.Body>
-      </Toast>
+      </Toast> */}
 
       {/* Modal */}
       <ModalComponent
