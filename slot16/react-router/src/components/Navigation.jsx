@@ -25,20 +25,20 @@ function Navigation() {
         Trang Chủ
       </NavLink>
       <NavLink
-        to="/about"
+        to="/san-pham"
         style={({ isActive }) =>
           isActive ? { ...linkStyle, ...activeStyle } : linkStyle
         }
       >
-        Giới Thiệu
+        Products
       </NavLink>
       <NavLink
-        to="/users/123"
+        to="/lien-he"
         style={({ isActive }) =>
           isActive ? { ...linkStyle, ...activeStyle } : linkStyle
         }
       >
-        User 123
+        Contact
       </NavLink>
     </nav>
   );
