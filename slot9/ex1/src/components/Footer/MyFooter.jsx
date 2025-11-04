@@ -6,7 +6,7 @@ function MyFooter({ author, email, linkGithub }) {
     <footer>
       <p>Author: {author}</p>
       <p>Created by: {email} </p>
-      <p>&copy; {new Date().getFullYear()} TraLTB. All rights reserved </p>
+      <p>&copy; {new Date().getFullYear()} TaiPT. All rights reserved </p>
       <Button variant="link" href="">
         My Link Github: {linkGithub}
       </Button>

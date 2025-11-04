@@ -13,6 +13,7 @@ export const initialMovieState = {
     year: "",
     country: "",
   },
+  showViewModal: false,
   showEditModal: false,
   showDeleteModal: false,
   movieToDelete: null,
@@ -88,7 +89,19 @@ export const movieReducer = (state, action) => {
         movieToDelete: null,
         showDeleteModal: false,
       };
+    case "OPEN_VIEW_MODAL":
+      return {
+        ...state,
+        currentMovie: { ...action.payload },
+        showViewModal: true,
+      };
 
+    case "CLOSE_VIEW_MODAL":
+      return {
+        ...state,
+        currentMovie: initialMovieState.currentMovie,
+        showViewModal: false,
+      };
     case "RESET_FORM":
       return {
         ...state,

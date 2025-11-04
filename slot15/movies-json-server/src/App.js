@@ -5,6 +5,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import LoginForm from "./components/LoginForm";
 import MovieManager from "./pages/MovieManager";
 import Header from "./components/Header";
+import MovieDetailPage from "./pages/MovieDetailPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginForm />} />
             <Route path="/movie" element={<MovieManager />} />
+            <Route path="/movies/:id" element={<MovieDetailPage />} />
           </Routes>
         </div>
       </AuthProvider>

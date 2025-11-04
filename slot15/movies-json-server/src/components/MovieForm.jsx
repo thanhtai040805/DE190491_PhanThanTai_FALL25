@@ -3,173 +3,198 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col, Modal, Image } from 'react-bootstrap';
 import { useMovieState, useMovieDispatch } from '../contexts/MovieContext';
 import { initialMovieState } from '../reducers/movieReducers';
+import { MovieDetail } from "./MovieDetail";
 
 // Component con tái sử dụng cho các trường input
-const MovieFields = ({ currentMovie, handleInputChange, handleFileChange, imagePreview, genres, errors = {}, validated = false }) => (
-    <>
-        <Row className="mb-3">
-            <Col md={6}>
-                <Form.Group controlId="formAvatar">
-                    <Form.Label>Ảnh Avatar Phim</Form.Label>
-                    <Form.Control 
-                        type="file" 
-                        name="avatarFile" 
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        className="mb-2"
-                    />
-                    <Form.Control 
-                        type="text" 
-                        name="avatar" 
-                        value={currentMovie.avatar || ''} 
-                        onChange={handleInputChange} 
-                        placeholder="Hoặc nhập URL hình ảnh"
-                        isInvalid={validated && errors.avatar}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.avatar}
-                    </Form.Control.Feedback>
-                    {imagePreview && (
-                        <div className="mt-2">
-                            <Image src={imagePreview} alt="Preview" thumbnail style={{ maxWidth: '200px', maxHeight: '150px' }} />
-                        </div>
-                    )}
-                </Form.Group>
-            </Col>
-            <Col md={6}>
-                <Form.Group controlId="formTitle">
-                <Form.Label>Tên Phim <span className="text-danger">*</span></Form.Label>
-                <Form.Control 
-                    type="text" 
-                    name="title" 
-                    value={currentMovie.title || ''} 
-                    onChange={handleInputChange} 
-                    placeholder="Tên phim" 
-                    required 
-                    isInvalid={validated && errors.title}
-                    isValid={validated && !errors.title && currentMovie.title}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.title}
-                </Form.Control.Feedback>
-               
-                </Form.Group>
-            </Col>
-        </Row>
-        <Row className="mb-3">
-            <Col md={12}>
-                <Form.Group controlId="formDescription">
-                <Form.Label>Mô tả <span className="text-danger">*</span></Form.Label>
-                <Form.Control 
-                    as="textarea" 
-                    rows={3} 
-                    name="description" 
-                    value={currentMovie.description || ''} 
-                    onChange={handleInputChange} 
-                    placeholder="Mô tả phim" 
-                    required 
-                    isInvalid={validated && errors.description}
-                    isValid={validated && !errors.description && currentMovie.description}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.description}
-                </Form.Control.Feedback>
-                
-                </Form.Group>
-            </Col>
-        </Row>
-        <Row className="mb-3">
-            <Col md={4}>
-                <Form.Group controlId="formGenre">
-                    <Form.Label>Thể loại <span className="text-danger">*</span></Form.Label>
-                    <Form.Select 
-                        name="genreId" 
-                        value={currentMovie.genreId || ''} 
-                        onChange={handleInputChange} 
-                        required
-                        isInvalid={validated && errors.genreId}
-                        isValid={validated && !errors.genreId && currentMovie.genreId}
-                    >
-                        <option value="">Chọn thể loại</option>
-                        {genres.map((genre) => (
-                            <option key={genre.id} value={genre.id}>{genre.name}</option>
-                        ))}
-                    </Form.Select>
-                    <Form.Control.Feedback type="invalid">
-                        {errors.genreId}
-                    </Form.Control.Feedback>
-                    
-                </Form.Group>
-            </Col>
-            <Col md={4}>
-                <Form.Group controlId="formDuration">
-                <Form.Label>Thời lượng (phút) <span className="text-danger">*</span></Form.Label>
-                <Form.Control 
-                    type="number" 
-                    name="duration" 
-                    value={currentMovie.duration || ''} 
-                    onChange={handleInputChange} 
-                    placeholder="Phút" 
-                    required 
-                    min="1"
-                    max="600"
-                    isInvalid={validated && errors.duration}
-                    isValid={validated && !errors.duration && currentMovie.duration}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.duration}
-                </Form.Control.Feedback>
-                
-                </Form.Group>
-            </Col>
-            <Col md={2}>
-                <Form.Group controlId="formYear">
-                <Form.Label>Năm <span className="text-danger">*</span></Form.Label>
-                <Form.Control 
-                    type="number" 
-                    name="year" 
-                    value={currentMovie.year || ''} 
-                    onChange={handleInputChange} 
-                    placeholder="Năm" 
-                    required 
-                    min="1900"
-                    max="2030"
-                    isInvalid={validated && errors.year}
-                    isValid={validated && !errors.year && currentMovie.year}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.year}
-                </Form.Control.Feedback>
-                
-            </Form.Group>
-            </Col>
-            <Col md={2}>
-                <Form.Group controlId="formCountry">
-                <Form.Label>Quốc gia <span className="text-danger">*</span></Form.Label>
-                <Form.Control 
-                    type="text" 
-                    name="country" 
-                    value={currentMovie.country || ''} 
-                    onChange={handleInputChange} 
-                    placeholder="Quốc gia" 
-                    required 
-                    isInvalid={validated && errors.country}
-                    isValid={validated && !errors.country && currentMovie.country}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.country}
-                </Form.Control.Feedback>
-              
-                </Form.Group>
-            </Col>
-        </Row>
-    </>
+const MovieFields = ({
+  currentMovie,
+  handleInputChange,
+  handleFileChange,
+  imagePreview,
+  genres,
+  errors = {},
+  validated = false,
+}) => (
+  <>
+    <Row className="mb-3">
+      <Col md={6}>
+        <Form.Group controlId="formAvatar">
+          <Form.Label>Ảnh Avatar Phim</Form.Label>
+          <Form.Control
+            type="file"
+            name="avatarFile"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="mb-2"
+          />
+          <Form.Control
+            type="text"
+            name="avatar"
+            value={currentMovie.avatar || ""}
+            onChange={handleInputChange}
+            placeholder="Hoặc nhập URL hình ảnh"
+            isInvalid={validated && errors.avatar}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.avatar}
+          </Form.Control.Feedback>
+          {imagePreview && (
+            <div className="mt-2">
+              <Image
+                src={imagePreview}
+                alt="Preview"
+                thumbnail
+                style={{ maxWidth: "200px", maxHeight: "150px" }}
+              />
+            </div>
+          )}
+        </Form.Group>
+      </Col>
+      <Col md={6}>
+        <Form.Group controlId="formTitle">
+          <Form.Label>
+            Tên Phim <span className="text-danger">*</span>
+          </Form.Label>
+          <Form.Control
+            type="text"
+            name="title"
+            value={currentMovie.title || ""}
+            onChange={handleInputChange}
+            placeholder="Tên phim"
+            required
+            isInvalid={validated && errors.title}
+            isValid={validated && !errors.title && currentMovie.title}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.title}
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Col>
+    </Row>
+    <Row className="mb-3">
+      <Col md={12}>
+        <Form.Group controlId="formDescription">
+          <Form.Label>
+            Mô tả <span className="text-danger">*</span>
+          </Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            name="description"
+            value={currentMovie.description || ""}
+            onChange={handleInputChange}
+            placeholder="Mô tả phim"
+            required
+            isInvalid={validated && errors.description}
+            isValid={
+              validated && !errors.description && currentMovie.description
+            }
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.description}
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Col>
+    </Row>
+    <Row className="mb-3">
+      <Col md={4}>
+        <Form.Group controlId="formGenre">
+          <Form.Label>
+            Thể loại <span className="text-danger">*</span>
+          </Form.Label>
+          <Form.Select
+            name="genreId"
+            value={currentMovie.genreId || ""}
+            onChange={handleInputChange}
+            required
+            isInvalid={validated && errors.genreId}
+            isValid={validated && !errors.genreId && currentMovie.genreId}
+          >
+            <option value="">Chọn thể loại</option>
+            {genres.map((genre) => (
+              <option key={genre.id} value={genre.id}>
+                {genre.name}
+              </option>
+            ))}
+          </Form.Select>
+          <Form.Control.Feedback type="invalid">
+            {errors.genreId}
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Col>
+      <Col md={4}>
+        <Form.Group controlId="formDuration">
+          <Form.Label>
+            Thời lượng (phút) <span className="text-danger">*</span>
+          </Form.Label>
+          <Form.Control
+            type="number"
+            name="duration"
+            value={currentMovie.duration || ""}
+            onChange={handleInputChange}
+            placeholder="Phút"
+            required
+            min="1"
+            max="600"
+            isInvalid={validated && errors.duration}
+            isValid={validated && !errors.duration && currentMovie.duration}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.duration}
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Col>
+      <Col md={2}>
+        <Form.Group controlId="formYear">
+          <Form.Label>
+            Năm <span className="text-danger">*</span>
+          </Form.Label>
+          <Form.Control
+            type="number"
+            name="year"
+            value={currentMovie.year || ""}
+            onChange={handleInputChange}
+            placeholder="Năm"
+            required
+            min="1900"
+            max="2030"
+            isInvalid={validated && errors.year}
+            isValid={validated && !errors.year && currentMovie.year}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.year}
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Col>
+      <Col md={2}>
+        <Form.Group controlId="formCountry">
+          <Form.Label>
+            Quốc gia <span className="text-danger">*</span>
+          </Form.Label>
+          <Form.Control
+            type="text"
+            name="country"
+            value={currentMovie.country || ""}
+            onChange={handleInputChange}
+            placeholder="Quốc gia"
+            required
+            isInvalid={validated && errors.country}
+            isValid={validated && !errors.country && currentMovie.country}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.country}
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Col>
+    </Row>
+  </>
 );
 
 const MovieForm = () => {
   const state = useMovieState();
   const { dispatch, handleCreateOrUpdate } = useMovieDispatch();
-  const { currentMovie, isEditing, showEditModal, genres } = state;
+  const { currentMovie, isEditing, showEditModal, genres, showViewModal } =
+    state;
   const [imagePreview, setImagePreview] = useState("");
   const [validated, setValidated] = useState(false);
   const [errors, setErrors] = useState({});
@@ -207,6 +232,10 @@ const MovieForm = () => {
     setImagePreview(""); // Reset preview khi đóng modal
     setValidated(false);
     setErrors({});
+  };
+
+  const handleCloseViewModal = () => {
+    dispatch({ type: "CLOSE_VIEW_MODAL" });
   };
 
   // Validation function
@@ -347,9 +376,31 @@ const MovieForm = () => {
           </Modal.Footer>
         </Form>
       </Modal>
+
+      {/* MODAL CHỈNH SỬA (Chỉ hiện khi showViewModal là true) */}
+      <Modal show={showViewModal} onHide={handleCloseViewModal} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Chỉnh sửa Phim ID: {isEditing}</Modal.Title>
+        </Modal.Header>
+        <Form noValidate>
+          <Modal.Body>
+            <MovieDetail
+              currentMovie={currentMovie}
+              imagePreview={currentMovie.avatar}
+              genres={genres}
+              errors={errors}
+              validated={validated}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseViewModal}>
+              Hủy
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     </>
   );
 };
 
 export default MovieForm;
-

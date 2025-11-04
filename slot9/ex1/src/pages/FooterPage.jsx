@@ -4,9 +4,9 @@ export default function FooterPage() {
   return (
     <div className="footer">
       <MyFooter
-        author="TraLTB"
-        email="traltb@fe.edu.vn"
-        linkGithub="Movie Management Project"
+        author="TaiPhanThanh"
+        email="ptttai123@gmail.com"
+        linkGithub="https://github.com/TaiPhanThanh"
       />
     </div>
   );

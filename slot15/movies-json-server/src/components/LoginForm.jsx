@@ -10,7 +10,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { ConfirmModal } from "./ConfirmModal";
 
 // 1. Khởi tạo trạng thái ban đầu cho form
 const initialFormState = {
@@ -44,6 +44,16 @@ function formReducer(state, action) {
         ...state,
         errors: action.errors,
       };
+    case "SHOW_SUCCESS_MODAL":
+      return {
+        ...state,
+        showSuccessModal: true,
+      };
+    case "HIDE_SUCCESS_MODAL":
+      return {
+        ...state,
+        showSuccessModal: false,
+      };
     case "RESET_FORM":
       return initialFormState;
     default:
@@ -52,7 +62,6 @@ function formReducer(state, action) {
 }
 
 function LoginForm() {
-  const navigate = useNavigate();
   // 3. Sử dụng useReducer cho form state
   const [formState, dispatch] = useReducer(formReducer, initialFormState);
 
@@ -147,7 +156,7 @@ function LoginForm() {
 
       if (result.ok) {
         // Hiển thị modal thành công
-        navigate("/movie");
+        dispatch({ type: "SHOW_SUCCESS_MODAL" });
       }
       // Lỗi sẽ được hiển thị qua AuthContext error
     } catch (err) {
@@ -159,6 +168,12 @@ function LoginForm() {
   const handleReset = () => {
     dispatch({ type: "RESET_FORM" });
     clearError();
+  };
+
+  // 10. Xử lý đóng modal thành công
+  const handleCloseSuccessModal = () => {
+    dispatch({ type: "HIDE_SUCCESS_MODAL" });
+    dispatch({ type: "RESET_FORM" });
   };
 
   return (
@@ -253,6 +268,15 @@ function LoginForm() {
           </Card>
         </Col>
       </Row>
+
+      {/* Modal thông báo thành công */}
+      <ConfirmModal
+        show={formState.showSuccessModal}
+        title="Login Successful"
+        message={`Welcome, ${user?.username}! You have successfully logged in as ${user?.role}.`}
+        onConfirm={handleCloseSuccessModal}
+        onHide={handleCloseSuccessModal}
+      />
     </Container>
   );
 }

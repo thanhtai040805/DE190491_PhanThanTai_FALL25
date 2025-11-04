@@ -29,10 +29,12 @@ export default function HomeCarousel() {
           >
             <h3 className="mb-1">
               {m.title}{" "}
-              <Badge bg="info" className="text-dark">
+              <Badge bg="info" className="text-white">
                 {m.genre}
               </Badge>{" "}
-              <Badge bg="secondary">{m.year}</Badge>
+              <Badge bg="secondary" className="text-white">
+                {m.year}
+              </Badge>
             </h3>
             <p className="mb-0" style={{ fontSize: "0.95rem" }}>
               {m.description}
