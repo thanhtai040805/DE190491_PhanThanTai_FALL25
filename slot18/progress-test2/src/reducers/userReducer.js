@@ -18,7 +18,6 @@ export const userReducer = (state, action) => {
           isLoading: false,
           error: null,
         };
-
       case "UPDATE_USER_STATUS":
         return {
           ...state,

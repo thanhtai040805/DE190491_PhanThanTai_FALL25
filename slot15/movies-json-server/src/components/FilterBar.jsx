@@ -1,154 +1,127 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useMovieState, useMovieDispatch } from "../contexts/MovieContext";
+import React, { useState, useEffect } from "react";
+import { useMotorbikeState, useMotorbikeDispatch } from "../contexts/MotorbikeContext";
+import { Form, Button, Row, Col, InputGroup } from "react-bootstrap";
 
 const FilterBar = () => {
-  const state = useMovieState();
-  const { dispatch } = useMovieDispatch();
+  const state = useMotorbikeState();
+  const { dispatch } = useMotorbikeDispatch();
+
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState("");
-  const [durationRange, setDurationRange] = useState([0, 300]);
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [yearRange, setYearRange] = useState([2000, 2025]);
   const [sortOrder, setSortOrder] = useState("");
 
-  // 🧠 Lọc + tìm kiếm + sắp xếp
+  // ✅ Lọc, tìm kiếm, sắp xếp
   useEffect(() => {
-    let filteredMovies = state.allMovies; // ✅ luôn bắt đầu từ bản gốc
+    let filteredMotorbikes = state.motorbikes;
 
-    // 🔍 Tìm kiếm theo tên phim
+    // Tìm kiếm
     if (searchTerm.trim() !== "") {
-      filteredMovies = filteredMovies.filter((movie) =>
-        movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+      filteredMotorbikes = filteredMotorbikes.filter((motorbike) =>
+        motorbike.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    // 🎭 Lọc theo thể loại
-    if (selectedGenre) {
-      filteredMovies = filteredMovies.filter(
-        (movie) => movie.genreId === Number(selectedGenre)
+    // Lọc theo hãng
+    if (selectedBrand) {
+      filteredMotorbikes = filteredMotorbikes.filter(
+        (motorbike) => motorbike.brand === Number(selectedBrand)
       );
     }
 
-    // ⏱️ Lọc theo thời lượng
-    filteredMovies = filteredMovies.filter(
-      (movie) =>
-        movie.duration >= durationRange[0] && movie.duration <= durationRange[1]
+    // Lọc theo năm
+    filteredMotorbikes = filteredMotorbikes.filter(
+      (motorbike) =>
+        motorbike.year >= yearRange[0] && motorbike.year <= yearRange[1]
     );
 
-    // 🔤 Sắp xếp theo tên phim
+    // Sắp xếp
     if (sortOrder === "asc") {
-      filteredMovies = [...filteredMovies].sort((a, b) =>
-        a.title.localeCompare(b.title)
+      filteredMotorbikes = [...filteredMotorbikes].sort((a, b) =>
+        a.name.localeCompare(b.name)
       );
     } else if (sortOrder === "desc") {
-      filteredMovies = [...filteredMovies].sort((a, b) =>
-        b.title.localeCompare(a.title)
+      filteredMotorbikes = [...filteredMotorbikes].sort((a, b) =>
+        b.name.localeCompare(a.name)
       );
     }
 
-    dispatch({ type: "SET_FILTERED_MOVIES", payload: filteredMovies }); // ✅
-  }, [searchTerm, selectedGenre, durationRange, sortOrder]);
+    dispatch({ type: "SET_FILTERED_MOTORBIKES", payload: filteredMotorbikes });
+  }, [searchTerm, selectedBrand, yearRange, sortOrder, state.motorbikes, dispatch]);
+
+  // 🧹 Reset filter
+  const resetFilters = () => {
+    setSearchTerm("");
+    setSelectedBrand("");
+    setYearRange([2000, 2025]);
+    setSortOrder("");
+    dispatch({ type: "SET_FILTERED_MOTORBIKES", payload: state.motorbikes });
+  };
 
   return (
-    <div className="filter-bar" style={styles.container}>
-      {/* Ô tìm kiếm */}
-      <input
-        type="text"
-        placeholder="Tìm kiếm phim..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={styles.input}
-      />
+    <div className="bg-light p-3 rounded mb-3">
+      <Form>
+        <Row className="g-2 align-items-center">
+          {/* Ô tìm kiếm */}
+          <Col md={3}>
+            <Form.Control
+              type="text"
+              placeholder="🔍 Tìm kiếm motorbike..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control"
+            />
+          </Col>
 
-      {/* Chọn thể loại */}
-      <select
-        value={selectedGenre}
-        onChange={(e) => setSelectedGenre(e.target.value)}
-        style={styles.select}
-      >
-        <option value="">-- Tất cả thể loại --</option>
-        {state.genres.map((genre) => (
-          <option key={genre.id} value={genre.id}>
-            {genre.name}
-          </option>
-        ))}
-      </select>
+          {/* Hãng xe */}
+          <Col md={3}>
+            <Form.Select
+              value={selectedBrand}
+              onChange={(e) => setSelectedBrand(e.target.value)}
+            >
+              <option value="">-- Tất cả hãng xe --</option>
+              {state.brands.map((brand) => (
+                <option key={brand.id} value={brand.id}>
+                  {brand.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Col>
 
-      {/* Thời lượng */}
-      <div style={styles.duration}>
-        <label>Thời lượng: </label>
-        <input
-          type="number"
-          value={durationRange[0]}
-          onChange={(e) =>
-            setDurationRange([Number(e.target.value), durationRange[1]])
-          }
-          style={{ width: "60px" }}
-        />
-        {" - "}
-        <input
-          type="number"
-          value={durationRange[1]}
-          onChange={(e) =>
-            setDurationRange([durationRange[0], Number(e.target.value)])
-          }
-          style={{ width: "60px" }}
-        />
-        <span> phút</span>
-      </div>
+          {/* Năm */}
+          <Col md={3}>
+            <InputGroup>
+              <Form.Control
+                type="number"
+                value={yearRange[1]}
+                onChange={(e) => setYearRange([yearRange[0], Number(e.target.value)])}
+              />
+              <InputGroup.Text>năm</InputGroup.Text>
+            </InputGroup>
+          </Col>
 
-      {/* Sắp xếp */}
-      <select
-        value={sortOrder}
-        onChange={(e) => setSortOrder(e.target.value)}
-        style={styles.select}
-      >
-        <option value="">-- Sắp xếp theo tên --</option>
-        <option value="asc">Tăng dần (A → Z)</option>
-        <option value="desc">Giảm dần (Z → A)</option>
-      </select>
+          {/* Sắp xếp */}
+          <Col md={2}>
+            <Form.Select
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+            >
+              <option value="">-- Sắp xếp theo tên --</option>
+              <option value="asc">A → Z</option>
+              <option value="desc">Z → A</option>
+            </Form.Select>
+          </Col>
 
-      <button
-        onClick={() => {
-          setSearchTerm("");
-          setSelectedGenre("");
-          setDurationRange([0, 300]);
-          setSortOrder("");
-          dispatch({ type: "SET_FILTERED_MOVIES", payload: state.allMovies });
-        }}
-      >
-        🔄 Xóa bộ lọc
-      </button>
+          {/* Nút Reset */}
+          <Col md={1} className="text-end">
+            <Button variant="secondary" onClick={resetFilters}>
+              🔄
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </div>
   );
-};
-
-// 🎨 Style đơn giản inline
-const styles = {
-  container: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-    marginBottom: "15px",
-    padding: "10px",
-    backgroundColor: "#f9f9f9",
-    borderRadius: "8px",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-  },
-  input: {
-    padding: "8px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-  },
-  select: {
-    padding: "8px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-  },
-  duration: {
-    display: "flex",
-    alignItems: "center",
-    gap: "4px",
-  },
 };
 
 export default FilterBar;

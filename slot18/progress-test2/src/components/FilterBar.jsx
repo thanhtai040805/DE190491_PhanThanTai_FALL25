@@ -8,7 +8,6 @@ import {
 const FilterBar = () => {
   const { payments } = usePaymentState();
   const { dispatch } = usePaymentDispatch();
-
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
@@ -21,7 +20,6 @@ const FilterBar = () => {
   // ⚙️ Lọc & sắp xếp khi input thay đổi
   useEffect(() => {
     let filtered = [...payments];
-
     if (searchTerm.trim() !== "") {
       filtered = filtered.filter(
         (p) =>

@@ -14,10 +14,12 @@ import {
   usePaymentDispatch,
 } from "../contexts/PaymentContext";
 import { useAuth } from "../contexts/AuthContext.jsx";
+import { ModalAddPayment } from "../components/ModalAddPayment";
 
 const DashboardPage = () => {
-  const { displayedPayments, isLoading, error } = usePaymentState();
-  const { fetchPaymentsByUserId } = usePaymentDispatch();
+  const { displayedPayments, isLoading, error, showAddModal } =
+    usePaymentState();
+  const { fetchPaymentsByUserId, dispatch } = usePaymentDispatch();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -29,7 +31,11 @@ const DashboardPage = () => {
   }, [user.id, fetchPaymentsByUserId]);
 
   const handleAddPayment = () => {
-    navigate("/payments/add");
+    dispatch({ type: "OPEN_ADD_MODAL" });
+  };
+
+  const handleCloseAddModal = () => {
+    dispatch({ type: "CLOSE_ADD_MODAL" });
   };
 
   return (
@@ -45,9 +51,9 @@ const DashboardPage = () => {
             Thêm Payment Mới
           </Button>
         </div>
-        
+
         <FilterBar />
-        
+
         <Card className="mb-4 shadow-sm">
           <Card.Header as="h5">
             <i className="bi bi-table me-2"></i>
@@ -63,6 +69,8 @@ const DashboardPage = () => {
           </Card.Body>
         </Card>
       </Container>
+
+      <ModalAddPayment show={showAddModal} onHide={handleCloseAddModal} />
     </>
   );
 };

@@ -3,7 +3,6 @@ import { Container, Card, Button, Badge, Spinner, Alert } from "react-bootstrap"
 import { useParams, useNavigate } from "react-router-dom";
 import { usePaymentState, usePaymentDispatch } from "../contexts/PaymentContext";
 import NavigationHeader from "../components/NavigationHeader";
-
 const ViewPaymentDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();

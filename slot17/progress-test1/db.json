@@ -37,14 +37,6 @@
       "courseName": "Mobile Programming",
       "amount": 4200000,
       "date": "2025-10-10"
-    },
-    {
-      "id": "8e7b",
-      "userId": "1",
-      "semester": "SU24",
-      "courseName": "DBI",
-      "amount": 20000000,
-      "date": "2025-11-05"
     }
   ]
 }

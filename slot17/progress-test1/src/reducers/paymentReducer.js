@@ -6,6 +6,8 @@ export const initialPaymentState = {
   displayedPayments: [], // danh sách hiện đang hiển thị (sau khi filter, v.v)
   isLoading: false,
   error: null,
+  showAddModal: false,
+  showDeleteModal: false,
 };
 
 // Reducer quản lý state
@@ -69,7 +71,26 @@ export const paymentReducer = (state, action) => {
         isLoading: false,
         error: null,
       };
-
+    case "OPEN_ADD_MODAL":
+      return {
+        ...state,
+        showAddModal: true,
+      };
+    case "CLOSE_ADD_MODAL":
+      return {
+        ...state,
+        showAddModal: false,
+      };
+    case "OPEN_DELETE_MODAL":
+      return {
+        ...state,
+        showDeleteModal: true,
+      };
+    case "CLOSE_DELETE_MODAL":
+      return {
+        ...state,
+        showDeleteModal: false,
+      };
     default:
       return state;
   }
